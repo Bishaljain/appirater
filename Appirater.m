@@ -671,7 +671,10 @@ static BOOL _alwaysUseMainBundle = NO;
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     [userDefaults setBool:YES forKey:kAppiraterRatedCurrentVersion];
     [userDefaults synchronize];
-	
+    id <AppiraterDelegate> delegate = self.sharedInstance.delegate;
+	if(delegate&& [delegate respondsToSelector:@selector(appiraterDidOptToRate:)]){
+        [delegate appiraterDidOptToRate:self];
+    }
     // Use the built SKStoreReviewController if available (available from iOS 10.3 upwards)
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wunguarded-availability"
